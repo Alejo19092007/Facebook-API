@@ -1,7 +1,0 @@
-# Use this workspace to collaborate
-workspace:
-  id: f6141418-0a6d-443f-85e5-59ba900a0a5a
-
-localResources:
-  collections:
-    - ../facebook-api-postman-collection.json
