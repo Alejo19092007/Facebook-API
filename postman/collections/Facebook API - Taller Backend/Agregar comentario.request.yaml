@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{base_url}}/api/posts/3/comments"
+method: POST
+headers:
+  Accept: application/json
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\"author\": \"Carlos Gómez\", \"content\": \"¡Qué buenas fotos!\"}\r\n"
+order: 4000

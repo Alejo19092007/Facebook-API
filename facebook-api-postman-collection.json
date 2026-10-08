@@ -67,6 +67,24 @@
 			"response": []
 		},
 		{
+			"name": "Ver un post individual",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/posts/1",
+					"host": ["{{base_url}}"],
+					"path": ["api", "posts", "1"]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Agregar comentario",
 			"request": {
 				"method": "POST",
