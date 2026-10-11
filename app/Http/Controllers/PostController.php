@@ -7,8 +7,22 @@ use App\Models\PostImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @group Publicaciones
+ *
+ * Endpoints para crear, listar, buscar, comentar y reaccionar a publicaciones.
+ */
 class PostController extends Controller
 {
+    /**
+     * Listar publicaciones
+     *
+     * Devuelve las publicaciones paginadas (10 por página), con sus imágenes y comentarios.
+     * Acepta el parámetro opcional `search` para filtrar por título o contenido.
+     *
+     * @queryParam page integer Número de página a consultar. Example: 1
+     * @queryParam search string Texto a buscar en título o contenido. Example: viaje
+     */
     public function index(Request $request)
     {
         $posts = Post::with(['images', 'comments'])
@@ -29,6 +43,13 @@ class PostController extends Controller
         return response()->json($posts, 200);
     }
 
+    /**
+     * Ver un post individual
+     *
+     * Devuelve un post específico con sus imágenes y comentarios.
+     *
+     * @urlParam id integer required El id del post. Example: 1
+     */
     public function show($id)
     {
         $post = Post::with(['images', 'comments'])->findOrFail($id);
@@ -40,6 +61,16 @@ class PostController extends Controller
         return response()->json($post, 200);
     }
 
+    /**
+     * Crear publicación
+     *
+     * Crea un post con título, contenido y una o más imágenes (opcional). Requiere autenticación.
+     *
+     * @authenticated
+     * @bodyParam title string required Título de la publicación. Example: Mi primera publicación
+     * @bodyParam content string required Contenido de la publicación. Example: Hola a todos
+     * @bodyParam images[] file Imágenes a adjuntar (jpeg, png, jpg, gif, máx 2MB c/u).
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -67,6 +98,15 @@ class PostController extends Controller
         return response()->json($post->load('images'), 201);
     }
 
+    /**
+     * Dar "Me gusta"
+     *
+     * Registra un like del usuario autenticado sobre el post. Cada usuario solo puede
+     * dar like una vez por publicación.
+     *
+     * @authenticated
+     * @urlParam id integer required El id del post. Example: 1
+     */
     public function like(Request $request, $id)
     {
         $post = Post::findOrFail($id);
@@ -86,6 +126,14 @@ class PostController extends Controller
         ], 200);
     }
 
+    /**
+     * Eliminar publicación
+     *
+     * Elimina un post y sus imágenes asociadas (en disco y en base de datos). Requiere autenticación.
+     *
+     * @authenticated
+     * @urlParam id integer required El id del post. Example: 1
+     */
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
