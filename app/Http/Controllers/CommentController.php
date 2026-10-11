@@ -23,6 +23,7 @@ class CommentController extends Controller
         $post = Post::findOrFail($postId);
 
         $comment = $post->comments()->create([
+            'user_id' => $request->user()->id,
             'author'  => $request->author,
             'content' => $request->content,
         ]);
