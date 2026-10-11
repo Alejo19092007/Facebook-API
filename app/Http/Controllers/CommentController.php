@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewCommentMail;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
@@ -27,6 +29,10 @@ class CommentController extends Controller
             'author'  => $request->author,
             'content' => $request->content,
         ]);
+
+        if ($post->user) {
+            Mail::to($post->user->email)->send(new NewCommentMail($comment));
+        }
 
         return response()->json($comment, 201);
     }
