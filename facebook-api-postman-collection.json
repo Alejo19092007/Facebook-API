@@ -6,44 +6,66 @@
 	},
 	"item": [
 		{
+			"name": "Registrar usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{ "key": "Accept", "value": "application/json" },
+					{ "key": "Content-Type", "value": "application/json" }
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Alejandro Jimenez\", \"email\": \"alejo@test.com\", \"password\": \"password123\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/register",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "register"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar sesion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{ "key": "Accept", "value": "application/json" },
+					{ "key": "Content-Type", "value": "application/json" }
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"alejo@test.com\", \"password\": \"password123\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/login",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "login"]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Crear publicación con imágenes",
 			"request": {
 				"method": "POST",
 				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					}
+					{ "key": "Accept", "value": "application/json" },
+					{ "key": "Authorization", "value": "Bearer {{token}}" }
 				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
-						{
-							"key": "title",
-							"value": "Mi primera publicación",
-							"type": "text"
-						},
-						{
-							"key": "content",
-							"value": "Hola a todos, comparto fotos de mi viaje.",
-							"type": "text"
-						},
-						{
-							"key": "images[]",
-							"type": "file",
-							"src": []
-						},
-						{
-							"key": "images[]",
-							"type": "file",
-							"src": []
-						}
+						{ "key": "title", "value": "Mi primera publicación", "type": "text" },
+						{ "key": "content", "value": "Hola a todos, comparto fotos de mi viaje.", "type": "text" },
+						{ "key": "images[]", "type": "file", "src": [] },
+						{ "key": "images[]", "type": "file", "src": [] }
 					]
 				},
 				"url": {
-					"raw": "{{base_url}}/api/posts",
+					"raw": "{{base_url}}/api/v1/posts",
 					"host": ["{{base_url}}"],
-					"path": ["api", "posts"]
+					"path": ["api", "v1", "posts"]
 				}
 			},
 			"response": []
@@ -53,15 +75,33 @@
 			"request": {
 				"method": "GET",
 				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					}
+					{ "key": "Accept", "value": "application/json" }
 				],
 				"url": {
-					"raw": "{{base_url}}/api/posts",
+					"raw": "{{base_url}}/api/v1/posts?page=1",
 					"host": ["{{base_url}}"],
-					"path": ["api", "posts"]
+					"path": ["api", "v1", "posts"],
+					"query": [
+						{ "key": "page", "value": "1" }
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar publicaciones",
+			"request": {
+				"method": "GET",
+				"header": [
+					{ "key": "Accept", "value": "application/json" }
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/posts?search=viaje",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "posts"],
+					"query": [
+						{ "key": "search", "value": "viaje" }
+					]
 				}
 			},
 			"response": []
@@ -71,15 +111,12 @@
 			"request": {
 				"method": "GET",
 				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					}
+					{ "key": "Accept", "value": "application/json" }
 				],
 				"url": {
-					"raw": "{{base_url}}/api/posts/1",
+					"raw": "{{base_url}}/api/v1/posts/1",
 					"host": ["{{base_url}}"],
-					"path": ["api", "posts", "1"]
+					"path": ["api", "v1", "posts", "1"]
 				}
 			},
 			"response": []
@@ -89,23 +126,18 @@
 			"request": {
 				"method": "POST",
 				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
+					{ "key": "Accept", "value": "application/json" },
+					{ "key": "Content-Type", "value": "application/json" },
+					{ "key": "Authorization", "value": "Bearer {{token}}" }
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\"author\": \"Carlos Gómez\", \"content\": \"¡Qué buenas fotos!\"}"
 				},
 				"url": {
-					"raw": "{{base_url}}/api/posts/1/comments",
+					"raw": "{{base_url}}/api/v1/posts/1/comments",
 					"host": ["{{base_url}}"],
-					"path": ["api", "posts", "1", "comments"]
+					"path": ["api", "v1", "posts", "1", "comments"]
 				}
 			},
 			"response": []
@@ -115,15 +147,13 @@
 			"request": {
 				"method": "POST",
 				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					}
+					{ "key": "Accept", "value": "application/json" },
+					{ "key": "Authorization", "value": "Bearer {{token}}" }
 				],
 				"url": {
-					"raw": "{{base_url}}/api/posts/1/like",
+					"raw": "{{base_url}}/api/v1/posts/1/like",
 					"host": ["{{base_url}}"],
-					"path": ["api", "posts", "1", "like"]
+					"path": ["api", "v1", "posts", "1", "like"]
 				}
 			},
 			"response": []
@@ -133,15 +163,13 @@
 			"request": {
 				"method": "DELETE",
 				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json"
-					}
+					{ "key": "Accept", "value": "application/json" },
+					{ "key": "Authorization", "value": "Bearer {{token}}" }
 				],
 				"url": {
-					"raw": "{{base_url}}/api/posts/1",
+					"raw": "{{base_url}}/api/v1/posts/1",
 					"host": ["{{base_url}}"],
-					"path": ["api", "posts", "1"]
+					"path": ["api", "v1", "posts", "1"]
 				}
 			},
 			"response": []
@@ -151,6 +179,10 @@
 		{
 			"key": "base_url",
 			"value": "http://127.0.0.1:8000"
+		},
+		{
+			"key": "token",
+			"value": ""
 		}
 	]
 }
