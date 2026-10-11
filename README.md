@@ -59,6 +59,14 @@ Al comentar una publicación, si el post tiene un dueño autenticado, se envía 
 - **Comment**: pertenece a un Post y a un User (`post_id`, `user_id`, `author`, `content`)
 - **post_user** (pivote): relación muchos-a-muchos entre Post y User para los likes, con restricción única por par post/usuario
 
+## Documentación interactiva
+
+Con el servidor corriendo, la documentación generada automáticamente con **Scribe** está disponible en:
+```
+http://127.0.0.1:8000/docs
+```
+Incluye todos los endpoints, parámetros, ejemplos de petición/respuesta y un botón "Try it out" para probarlos desde el navegador. Se regenera con `php artisan scribe:generate`.
+
 ## Pruebas
 
 La colección de Postman con todas las peticiones de prueba se encuentra en [`facebook-api-postman-collection.json`](facebook-api-postman-collection.json).
