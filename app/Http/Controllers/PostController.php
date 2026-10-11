@@ -63,14 +63,22 @@ class PostController extends Controller
         return response()->json($post->load('images'), 201);
     }
 
-    public function like($id)
+    public function like(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        $post->increment('likes_count');
+        $user = $request->user();
+
+        if ($post->likedByUsers()->where('user_id', $user->id)->exists()) {
+            return response()->json([
+                'message' => 'Ya diste like a esta publicacion',
+            ], 409);
+        }
+
+        $post->likedByUsers()->attach($user->id);
 
         return response()->json([
             'message'     => 'Me gusta añadido correctamente',
-            'likes_count' => $post->likes_count,
+            'likes_count' => $post->likedByUsers()->count(),
         ], 200);
     }
 
