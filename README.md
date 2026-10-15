@@ -4,6 +4,21 @@ API REST simplificada inspirada en Facebook, construida con Laravel. Permite cre
 
 Proyecto desarrollado para el curso **Arquitectura y Desarrollo Backend** - Universidad Autónoma de Bucaramanga.
 
+## Despliegue en producción
+
+La API está desplegada en **Render**, contenedorizada con Docker y conectada a una base de datos **PostgreSQL** gestionada:
+
+```
+https://facebook-api-htn0.onrender.com
+```
+
+Ejemplo de prueba:
+```
+GET https://facebook-api-htn0.onrender.com/api/v1/posts
+```
+
+> Nota: el servicio está en el plan gratuito de Render, así que si lleva más de 15 minutos sin recibir peticiones entra en modo suspensión. La primera petición tras ese periodo puede tardar 30-50 segundos en responder mientras el contenedor se reactiva.
+
 ## Requisitos
 
 - PHP 8.1+
@@ -26,6 +41,16 @@ php artisan serve
 ```
 
 La API quedará disponible en `http://127.0.0.1:8000`. Todas las rutas están bajo el prefijo `/api/v1`.
+
+## Instalación con Docker (local)
+
+También puedes levantar el proyecto completo (API + PostgreSQL) con Docker, sin instalar PHP ni Composer localmente:
+
+```bash
+docker compose up -d --build
+```
+
+Esto construye la imagen a partir del `Dockerfile`, levanta un contenedor de PostgreSQL, y ejecuta automáticamente (vía `docker-entrypoint.sh`) las migraciones y el enlace de storage. La API queda disponible en `http://127.0.0.1:8080`.
 
 ## Autenticación
 
